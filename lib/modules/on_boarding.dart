@@ -37,7 +37,18 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 20.0),
+            child: defaultTextButton(
+                function: () {
+                  navigateAndFinish(context, LoginScreen());
+                },
+                text: 'SKIP'),
+          )
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.all(40.0),
         child: Column(
