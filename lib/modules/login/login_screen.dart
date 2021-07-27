@@ -2,9 +2,11 @@ import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:shop_app/shared/bloc/cubit/cubit.dart';
-import 'package:shop_app/shared/bloc/cubit/states.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shop_app/shared/components/components.dart';
+import 'package:shop_app/shared/cubit/cubit.dart';
+import 'package:shop_app/shared/cubit/states.dart';
+import 'package:shop_app/shared/network/local/%20cache_helper.dart';
 
 class LoginScreen extends StatelessWidget {
   var formKey = GlobalKey<FormState>();
@@ -15,29 +17,15 @@ class LoginScreen extends StatelessWidget {
     var passwordController = TextEditingController();
 
     return BlocProvider(
-      create: (context) => AppCubit(),
-      child: BlocConsumer<AppCubit, AppStates>(
+      create: (context) => LoginCubit(),
+      child: BlocConsumer<LoginCubit, LoginStates>(
         listener: (context, state) {
           if (state is LoginSuccessState) {
             if (state.loginModel.status) {
-              print(state.loginModel.data.token);
-              Fluttertoast.showToast(
-                  msg: state.loginModel.message,
-                  toastLength: Toast.LENGTH_LONG,
-                  gravity: ToastGravity.BOTTOM,
-                  timeInSecForIosWeb: 5,
-                  backgroundColor: Colors.green,
-                  textColor: Colors.white,
-                  fontSize: 16.0);
+              CacheHelper.saveData(key: 'token', value: state.loginModel.data.token);
+              toast(text: state.loginModel.message, state: ToastStates.SUCCESS);
             } else {
-              Fluttertoast.showToast(
-                  msg: state.loginModel.message,
-                  toastLength: Toast.LENGTH_LONG,
-                  gravity: ToastGravity.BOTTOM,
-                  timeInSecForIosWeb: 5,
-                  backgroundColor: Colors.red,
-                  textColor: Colors.white,
-                  fontSize: 16.0);
+              toast(text: state.loginModel.message, state: ToastStates.ERROR);
             }
           }
         },
@@ -87,19 +75,19 @@ class LoginScreen extends StatelessWidget {
                           },
                           onSubmit: (value) {
                             if (formKey.currentState.validate()) {
-                              AppCubit.get(context).loginScreen(
+                              LoginCubit.get(context).loginScreen(
                                   email: emailController.text,
                                   password: passwordController.text);
                             }
                           },
                           label: 'Password',
                           prefix: Icons.lock_outline,
-                          isPassword: AppCubit.get(context).isPassword,
-                          suffix: AppCubit.get(context).isPassword
+                          isPassword: LoginCubit.get(context).isPassword,
+                          suffix: LoginCubit.get(context).isPassword
                               ? Icons.remove_red_eye_outlined
                               : Icons.visibility_off_outlined,
                           suffixPressed: () {
-                            AppCubit.get(context).passwordSuffixChange();
+                            LoginCubit.get(context).passwordSuffixChange();
                           }),
                       SizedBox(height: 30),
                       ConditionalBuilder(
@@ -107,7 +95,7 @@ class LoginScreen extends StatelessWidget {
                         builder: (context) => defaultButton(
                           function: () {
                             if (formKey.currentState.validate()) {
-                              AppCubit.get(context).loginScreen(
+                              LoginCubit.get(context).loginScreen(
                                   email: emailController.text,
                                   password: passwordController.text);
                             }

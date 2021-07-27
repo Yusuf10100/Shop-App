@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app/models/login_model.dart';
-import 'package:shop_app/shared/bloc/cubit/states.dart';
+import 'package:shop_app/shared/cubit/states.dart';
 import 'package:shop_app/shared/network/end_points.dart';
 import 'package:shop_app/shared/network/remote/dio_helper.dart';
 
-class AppCubit extends Cubit<AppStates> {
-  AppCubit() : super(AppInitialState());
+class LoginCubit extends Cubit<LoginStates> {
+  LoginCubit() : super(LoginInitialState());
 
-  static AppCubit get(context) => BlocProvider.of(
+  static LoginCubit get(context) => BlocProvider.of(
       context); //to make it easy call object from bloc globally anywhere
 
   LoginModel loginModel;
@@ -23,10 +23,13 @@ class AppCubit extends Cubit<AppStates> {
         url: LOGIN, data: {'email': email, 'password': password}).then((value) {
       loginModel = LoginModel.fromJson(value.data);
       emit(LoginSuccessState(loginModel));
-    }).catchError((error) {
-      emit(LoginErrorState(error: error.toString()));
-      print(error.toString());
-    });
+    }).catchError(
+      (error) {
+        emit(LoginErrorState(error: error.toString()));
+        print(error.toString());
+      },
+    );
+    
   }
 
   /* bloc implementation for changing the suffix icon of password text field 

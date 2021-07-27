@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shop_app/shared/components/constants.dart';
 
 void navigateTo(context, widget) => Navigator.push(
@@ -13,9 +14,9 @@ void navigateAndFinish(context, widget) => Navigator.pushAndRemoveUntil(
       MaterialPageRoute(
         builder: (context) => widget,
       ),
-      (Route<dynamic> route) => false, //false to remove the previous route, true to keep it.
+      (Route<dynamic> route) =>
+          false, //false to remove the previous route, true to keep it.
     );
-
 
 Widget defaultButton({
   double width = double.infinity,
@@ -44,7 +45,6 @@ Widget defaultButton({
       ),
     );
 
-
 Widget defaultTextButton({
   @required Function function,
   @required String text,
@@ -55,7 +55,6 @@ Widget defaultTextButton({
         text.toUpperCase(),
       ),
     );
-
 
 Widget defaultFormField({
   @required TextEditingController controller,
@@ -85,8 +84,48 @@ Widget defaultFormField({
         prefixIcon: Icon(
           prefix,
         ),
-        suffixIcon: suffix != null ? IconButton( onPressed: suffixPressed,icon: Icon(suffix,),) : null,
+        suffixIcon: suffix != null
+            ? IconButton(
+                onPressed: suffixPressed,
+                icon: Icon(
+                  suffix,
+                ),
+              )
+            : null,
         border: OutlineInputBorder(),
       ),
     );
 
+//Toast reusable component
+Future<bool> toast({
+  @required String text,
+  @required ToastStates state,
+})  {
+  return Fluttertoast.showToast(
+    msg: text,
+    toastLength: Toast.LENGTH_LONG,
+    gravity: ToastGravity.BOTTOM,
+    timeInSecForIosWeb: 5,
+    backgroundColor: chooseToastColor(state),
+    textColor: Colors.white,
+    fontSize: 16.0,
+  );
+}
+
+enum ToastStates { SUCCESS, ERROR, WARNING }
+Color chooseToastColor(ToastStates state) {
+  Color color;
+
+  switch (state) {
+    case ToastStates.SUCCESS:
+      color = Colors.green;
+      break;
+    case ToastStates.ERROR:
+      color = Colors.red;
+      break;
+    case ToastStates.WARNING:
+      color = Colors.green;
+      break;
+  }
+  return color;
+}

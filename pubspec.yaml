@@ -35,6 +35,7 @@ dependencies:
   dio: ^3.0.10
   smooth_page_indicator: ^0.2.3
   fluttertoast: ^8.0.7
+  carousel_slider: ^4.0.0
 
   
 dev_dependencies:
