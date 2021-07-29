@@ -1,17 +1,8 @@
 # shop_app
 
-A new Flutter project (in progress) using bloc state management.
+A new Flutter project (in progress) using bloc state management and API.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+<img src="https://user-images.githubusercontent.com/69325037/127576804-3939f06a-1ebd-4581-bfdf-f76b436aea2a.jpeg" width="270"/> $~$ <img src="https://user-images.githubusercontent.com/69325037/127577008-2598b400-8442-41f2-81ae-fc6dafd47568.jpeg" width="270"/> $~$<img src="https://user-images.githubusercontent.com/69325037/127577046-5965f18f-4aa6-4a9d-ba9b-943ee1563256.jpeg" width="270"/> $~$<img src="https://user-images.githubusercontent.com/69325037/127577115-bdba7206-a844-4ddc-8375-36240e1f529c.jpeg" width="270"/>
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-# Shop-App
