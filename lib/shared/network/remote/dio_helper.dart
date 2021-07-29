@@ -8,7 +8,7 @@ class DioHelper {
       BaseOptions(
         baseUrl: 'https://student.valuxapps.com/api/',
         receiveDataWhenStatusError: true,
-        headers: {},
+        // headers: {},
       ),
     );
   }

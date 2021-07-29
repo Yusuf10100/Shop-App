@@ -8,10 +8,10 @@ class ShopLoadingHomeData extends ShopStates {}
 
 class ShopSuccessHomeData extends ShopStates {}
 
-class ShopErrorHomeData extends ShopStates {
-  String error;
-  ShopErrorHomeData({
-     this.error,
-  });
-  
-}
+class ShopErrorHomeData extends ShopStates {}
+
+class ShopSuccessCategoriesData extends ShopStates {}
+
+class ShopErrorCategoriesData extends ShopStates {}
+
+
