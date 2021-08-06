@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shop_app/layout/home_layout.dart';
+import 'package:shop_app/modules/Register/register.dart';
+import 'package:shop_app/modules/login/cubit/cubit.dart';
+import 'package:shop_app/modules/login/cubit/states.dart';
 import 'package:shop_app/shared/components/components.dart';
-import 'package:shop_app/shared/cubit/cubit.dart';
-import 'package:shop_app/shared/cubit/states.dart';
+import 'package:shop_app/shared/components/constants.dart';
 import 'package:shop_app/shared/network/local/%20cache_helper.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -22,9 +25,21 @@ class LoginScreen extends StatelessWidget {
         listener: (context, state) {
           if (state is LoginSuccessState) {
             if (state.loginModel.status) {
-              CacheHelper.saveData(key: 'token', value: state.loginModel.data.token);
-              toast(text: state.loginModel.message, state: ToastStates.SUCCESS);
-            } else {
+             
+              CacheHelper.saveData(
+                key: 'token',
+                value: state.loginModel.data.token,
+              ).then((value)
+              {
+                token = state.loginModel.data.token;
+
+                navigateAndFinish(
+                  context,
+                  HomeLayout(),
+                );
+              });
+            }
+             else {
               toast(text: state.loginModel.message, state: ToastStates.ERROR);
             }
           }
@@ -114,7 +129,15 @@ class LoginScreen extends StatelessWidget {
                                   .textTheme
                                   .bodyText2
                                   .copyWith(color: Colors.black)),
-                          defaultTextButton(function: () {}, text: 'Register')
+                                   defaultTextButton(
+                              function: () {
+                                navigateTo(
+                                  context,
+                                  ShopRegisterScreen(),
+                                );
+                              },
+                              text: 'register',
+                            ),
                         ],
                       ),
                     ],

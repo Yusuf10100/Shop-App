@@ -1,3 +1,10 @@
 const LOGIN = 'login';
 const HOME = 'home';
-const getCategories = 'categories';
+const CATEGORIES = 'categories';
+const FAVORITES = 'favorites';
+const PROFILE = 'profile';
+
+const UPDATE_PROFILE = 'update-profile';
+
+const SEARCH = 'products/search';
+const REGISTER = 'register';

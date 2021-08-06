@@ -4,13 +4,13 @@ import 'package:shop_app/layout/cubit/cubit.dart';
 import 'package:shop_app/layout/home_layout.dart';
 import 'package:shop_app/modules/login/login_screen.dart';
 
-import 'package:shop_app/shared/cubit/bloc_observer.dart';
-import 'package:shop_app/shared/cubit/cubit.dart';
-import 'package:shop_app/shared/cubit/states.dart';
 import 'package:shop_app/shared/network/local/%20cache_helper.dart';
 import 'package:shop_app/shared/network/remote/dio_helper.dart';
 import 'package:shop_app/shared/styles.dart/themes.dart';
 
+import 'modules/login/cubit/bloc_observer.dart';
+import 'modules/login/cubit/cubit.dart';
+import 'modules/login/cubit/states.dart';
 import 'modules/onBoarding/on_boarding.dart';
 
 void main() async {
@@ -19,6 +19,7 @@ void main() async {
   Bloc.observer = MyBlocObserver();
   DioHelper.init();
   await CacheHelper.init();
+  // await CacheHelper.deleteAllData();
   bool onBoarding = CacheHelper.getSavedData(key: 'onBoarding');
   String token = CacheHelper.getSavedData(key: 'token');
 
@@ -44,7 +45,8 @@ class MyApp extends StatelessWidget {
   final bool onBoarding;
   final Widget widget;
   MyApp({
-    this.onBoarding, this.widget,
+    this.onBoarding,
+    this.widget,
   });
   // This widget is the root of your application.
   @override
@@ -55,7 +57,9 @@ class MyApp extends StatelessWidget {
             create: (context) => LoginCubit()..changeAppThemeMode(),
           ),
           BlocProvider(
-            create: (context) => ShopCubit()..getHomeData(),
+            create: (context) => ShopCubit()
+              ..getHomeData()
+              ..getCategories()..getFavorites()..getUserModel(),
           ),
         ],
         child: BlocConsumer<LoginCubit, LoginStates>(
